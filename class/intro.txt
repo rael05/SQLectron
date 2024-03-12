@@ -1,0 +1,8 @@
+introduccion a SQLelectron
+Bienvenido a SQLelectron una aplicacion mobil con un serie de lecciones y ejercicios practicos que te ayudaran a aprender SQL a un nivel basico
+
+Que es SQL
+SQL "Structured Query Language" o en español "lenguaje de consulta estructurado", es un lenguaje diseñado para permitir a usuarios técnicos y no técnicos consultar, manipular y transformar datos de una base de datos relacional.
+Y debido a su simplicidad, las bases de datos SQL brindan almacenamiento seguro y escalable para millones de sitios web y aplicaciones móviles.
+
+Bases de datos relacionales

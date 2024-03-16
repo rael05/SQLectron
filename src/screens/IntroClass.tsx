@@ -1,18 +1,26 @@
 import React, {useState} from 'react';
 import {
   Image,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   View,
   useWindowDimensions,
+  Animated,
 } from 'react-native';
 
 import { imgBackGround1, backGround1, textPrimary } from '../themes/colors';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import {PrimaryButton, OutlinePrimaryB} from '../componets/buttons';
 import Footer from '../componets/shared/Footer';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { StackParamList } from '../../App';
+import { useCollapsibleHeader } from 'react-navigation-collapsible';
+import Header from '../componets/shared/Header';
+
+type ScreenProps = {
+  navigation: DrawerNavigationProp<StackParamList>;
+};
 
 const FirstRoute = () => (
   <View style={{ flex: 1, backgroundColor: backGround1 }}>
@@ -53,20 +61,29 @@ const renderScene = SceneMap({
   second: SecondRoute,
 });
 
-const renderTabBar = props => (
-  <TabBar
-    {...props}
-    indicatorStyle={{ backgroundColor: textPrimary, height: 3 }}
-    style={{ backgroundColor: backGround1, borderTopWidth: 1, borderTopColor: textPrimary }}
-    renderLabel={({ route, focused }) => (
-      <Text style={focused ? styles.tabLabelFocus : styles.tabLabel}>
-        {route.title}
-      </Text>
-    )}
-  />
-);
+const renderTabBar = (props) => {
+  return(
+    <TabBar
+      {...props}
+      indicatorStyle={{ backgroundColor: textPrimary, height: 3 }}
+      style={{ backgroundColor: backGround1, borderTopWidth: 1, borderTopColor: textPrimary }}
+      renderLabel={({ route, focused }) => (
+        <Text style={focused ? styles.tabLabelFocus : styles.tabLabel}>
+          {route.title}
+        </Text>
+      )}
+    />
+)};
 
-const IntroClass = () => {
+
+const IntroClass = ({ navigation }: ScreenProps) => {
+  const { onScroll, containerPaddingTop, scrollIndicatorInsetTop } =
+    useCollapsibleHeader({
+      navigationOptions: {
+        header: Header,
+      },
+    });
+
   const layout = useWindowDimensions();
   const [index, setIndex] = useState<number>(0);
   const [routes] = useState<Array<any>>([
@@ -81,11 +98,13 @@ const IntroClass = () => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <ScrollView
-        style={{flex: 1}}
-        ref={scrollRef}>
-        <View style={styles.bgImg}>
+    <Animated.ScrollView
+      onScroll={onScroll}
+      contentContainerStyle={{ paddingTop: containerPaddingTop }}
+      scrollIndicatorInsets={{ top: scrollIndicatorInsetTop }}
+      ref={scrollRef}
+    >
+      <View style={styles.bgImg}>
           <Image source={require('../../img/sql-intro.png')} style={styles.imgStyle} />
         </View>
         <TabView
@@ -106,8 +125,7 @@ const IntroClass = () => {
             </View>
           )}
         </Footer>
-      </ScrollView>
-    </SafeAreaView>
+    </Animated.ScrollView>
   );
 }
 

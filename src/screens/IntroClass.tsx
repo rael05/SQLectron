@@ -12,7 +12,6 @@ import {
 import { imgBackGround1, backGround1, textPrimary } from '../themes/colors';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import {PrimaryButton, OutlinePrimaryB} from '../componets/buttons';
-import Header from '../componets/shared/Header';
 import Footer from '../componets/shared/Footer';
 
 const FirstRoute = () => (
@@ -83,9 +82,9 @@ const IntroClass = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Header />
-
-      <ScrollView style={{flex: 1}} ref={scrollRef}>
+      <ScrollView
+        style={{flex: 1}}
+        ref={scrollRef}>
         <View style={styles.bgImg}>
           <Image source={require('../../img/sql-intro.png')} style={styles.imgStyle} />
         </View>

@@ -15,7 +15,6 @@ export default function App() {
   return (
     <NavigationContainer>
       <Drawer.Navigator>
-
         <Drawer.Screen
           name="IntroClass"
           component={IntroClass}

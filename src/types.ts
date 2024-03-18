@@ -1,6 +1,6 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 
-type StackParamList = {
+export type StackParamList = {
     IntroClass: undefined;
     FirstClass: undefined;
     SecondClass: undefined;
@@ -8,4 +8,9 @@ type StackParamList = {
 
 export type ScreenProps = {
     navigation: DrawerNavigationProp<StackParamList>;
+};
+
+export enum TabIndex {
+    first,
+    last
 };

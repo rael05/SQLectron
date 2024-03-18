@@ -1,7 +1,8 @@
-import { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
+import { NativeScrollEvent, NativeSyntheticEvent, ScrollView } from "react-native";
 
 import { useCollapsibleHeader } from "react-navigation-collapsible";
 import Header from "./componets/shared/Header";
+import { TabIndex } from "./types";
 
 type HeaderProps = {
     onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
@@ -9,7 +10,7 @@ type HeaderProps = {
     scrollIndicatorInsetTop: number;
 }
 
-export const parceHeader = (): HeaderProps => {
+export const parcialHeader = (): HeaderProps => {
     const { onScroll, containerPaddingTop, scrollIndicatorInsetTop } =
     useCollapsibleHeader({
         navigationOptions: {
@@ -17,4 +18,13 @@ export const parceHeader = (): HeaderProps => {
         },
     });
     return {onScroll, containerPaddingTop, scrollIndicatorInsetTop};
+};
+
+export const changeTab = (
+    indexToChange: TabIndex,
+    setIndex: (value: TabIndex) => void,
+    scrollRef: React.RefObject<ScrollView>
+) => {
+    setIndex(indexToChange);
+    scrollRef.current?.scrollTo({y: 0, animated: true});
 };

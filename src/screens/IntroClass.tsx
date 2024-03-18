@@ -11,10 +11,9 @@ import {
 
 import { imgBackGround1, backGround1, textPrimary } from '../themes/colors';
 import { TabView, SceneMap, TabBar} from 'react-native-tab-view';
-import {PrimaryButton, OutlinePrimaryB} from '../componets/buttons';
 import Footer from '../componets/shared/Footer';
-import { ScreenProps } from "../types";
-import { parceHeader } from '../utils';
+import { ScreenProps, TabIndex } from "../types";
+import { changeTab, parcialHeader } from '../utils';
 
 const FirstRoute = () => (
   <View style={{ flex: 1, backgroundColor: backGround1 }}>
@@ -71,20 +70,15 @@ const renderTabBar = (props: any) => {
 
 
 const IntroClass = ({navigation}: ScreenProps) => {
-  const { onScroll, containerPaddingTop, scrollIndicatorInsetTop } = parceHeader();
+  const { onScroll, containerPaddingTop, scrollIndicatorInsetTop } = parcialHeader();
 
   const layout = useWindowDimensions();
-  const [index, setIndex] = useState<number>(0);
+  const [index, setIndex] = useState<TabIndex>(TabIndex.first);
   const [routes] = useState<Array<any>>([
     { key: 'first', title: 'Clase  ' },
     { key: 'second', title: 'Ejemplo  ' },
   ]);
   const scrollRef = React.createRef<ScrollView>();
-
-  const changeTab = (index: number) => {
-    setIndex(index);
-    scrollRef.current?.scrollTo({y: 0, animated: true});
-  };
 
   return (
     <Animated.ScrollView
@@ -94,28 +88,20 @@ const IntroClass = ({navigation}: ScreenProps) => {
       ref={scrollRef}
     >
       <View style={styles.bgImg}>
-          <Image source={require('../../img/sql-intro.png')} style={styles.imgStyle} />
-        </View>
-        <TabView
-          renderTabBar={renderTabBar}
-          navigationState={{ index, routes }}
-          renderScene={renderScene}
-          onIndexChange={setIndex}
-          initialLayout={{ width: layout.width }}
-          style={{height: 650}}
-        />
-        <Footer>
-          {index === 0 ? (
-            <PrimaryButton title={'Siguiente'} action={() => changeTab(1)}/>
-          ) :(
-            <View style={styles.footerContainer}>
-              <OutlinePrimaryB title={'Anterior'} action={() => changeTab(0)}/>
-              <PrimaryButton title={'Siguiente'} action={() => {
-                navigation.navigate('FirstClass');
-              }}/>
-            </View>
-          )}
-        </Footer>
+        <Image source={require('../../img/sql-intro.png')} style={styles.imgStyle} />
+      </View>
+      <TabView
+        renderTabBar={renderTabBar}
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+        style={{height: 650}}
+      />
+      <Footer
+        currentTabIndex={index}
+        changeTab={(indexToChange) => changeTab(indexToChange, setIndex, scrollRef)}
+        nextClass={() => navigation.navigate('FirstClass')}/>
     </Animated.ScrollView>
   );
 }
@@ -163,10 +149,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: 'Jost-Regular',
     textAlign: 'center',
-  },
-  footerContainer: {
-    flexDirection: 'row',
-    gap: 40,
   },
 });
 

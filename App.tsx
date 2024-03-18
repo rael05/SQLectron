@@ -1,40 +1,35 @@
 import 'react-native-gesture-handler';
 
 import React from 'react';
-import { Button, View } from 'react-native';
+
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
+
 import IntroClass from './src/screens/IntroClass';
-
-export type StackParamList = {
-  Home: undefined;
-  Detail: undefined;
-  DefaultHeader: undefined;
-  StickyHeader: undefined;
-  BackgroundHeader: undefined;
-  SubHeader: undefined;
-  WithCustomHeader: undefined;
-  CustomHeaderDetail: undefined;
-  ShowHeaderScreen: undefined;
-};
-
-function SecondClass({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button onPress={() => navigation.goBack()} title="Go back home" />
-    </View>
-  );
-}
+import FirstClass from './src/screens/FirstClass';
+import SecondClass from './src/screens/SecondClass';
 
 const Drawer = createDrawerNavigator();
 
 export default function App() {
-
   return (
     <NavigationContainer>
       <Drawer.Navigator>
-        <Drawer.Screen name="Introduccion a SQL" component={IntroClass}/>
-        <Drawer.Screen name='Clase 1: consulta "SELECT"' component={SecondClass} />
+
+        <Drawer.Screen
+          name="IntroClass"
+          component={IntroClass}
+          options={{title: 'Introduccion a SQL'}}/>
+
+        <Drawer.Screen
+          name='FirstClass'
+          component={FirstClass}
+          options={{title: 'Clase 1: consulta "SELECT"'}}/>
+
+        <Drawer.Screen
+          name='SecondClass'
+          component={SecondClass}
+          options={{title: "Clase 2: Consulta con restricciones 1"}}/>
       </Drawer.Navigator>
     </NavigationContainer>
   );

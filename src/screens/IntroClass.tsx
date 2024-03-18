@@ -10,17 +10,11 @@ import {
 } from 'react-native';
 
 import { imgBackGround1, backGround1, textPrimary } from '../themes/colors';
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import { TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {PrimaryButton, OutlinePrimaryB} from '../componets/buttons';
 import Footer from '../componets/shared/Footer';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { StackParamList } from '../../App';
-import { useCollapsibleHeader } from 'react-navigation-collapsible';
-import Header from '../componets/shared/Header';
-
-type ScreenProps = {
-  navigation: DrawerNavigationProp<StackParamList>;
-};
+import { ScreenProps } from "../types";
+import { parceHeader } from '../utils';
 
 const FirstRoute = () => (
   <View style={{ flex: 1, backgroundColor: backGround1 }}>
@@ -61,7 +55,7 @@ const renderScene = SceneMap({
   second: SecondRoute,
 });
 
-const renderTabBar = (props) => {
+const renderTabBar = (props: any) => {
   return(
     <TabBar
       {...props}
@@ -76,13 +70,8 @@ const renderTabBar = (props) => {
 )};
 
 
-const IntroClass = ({ navigation }: ScreenProps) => {
-  const { onScroll, containerPaddingTop, scrollIndicatorInsetTop } =
-    useCollapsibleHeader({
-      navigationOptions: {
-        header: Header,
-      },
-    });
+const IntroClass = ({navigation}: ScreenProps) => {
+  const { onScroll, containerPaddingTop, scrollIndicatorInsetTop } = parceHeader();
 
   const layout = useWindowDimensions();
   const [index, setIndex] = useState<number>(0);
@@ -121,7 +110,9 @@ const IntroClass = ({ navigation }: ScreenProps) => {
           ) :(
             <View style={styles.footerContainer}>
               <OutlinePrimaryB title={'Anterior'} action={() => changeTab(0)}/>
-              <PrimaryButton title={'Siguiente'} action={() => console.log('cambio de classe')}/>
+              <PrimaryButton title={'Siguiente'} action={() => {
+                navigation.navigate('FirstClass');
+              }}/>
             </View>
           )}
         </Footer>

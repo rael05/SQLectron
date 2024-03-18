@@ -23,7 +23,7 @@ const Header = ({navigation}: HeaderProps) => {
             colors={[headerGradient1, headerGradient2, headerGradient1]}
             style={styles.container}>
               <TouchableOpacity onPress={openMenu}>
-                <Icon name="navicon" size={40} color="#ffffff"/>
+                <Icon name="navicon" size={30} color="#ffffff"/>
               </TouchableOpacity>
               <Text style={styles.text}> SQLectron </Text>
         </LinearGradient>

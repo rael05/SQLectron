@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   ScrollView,
@@ -12,14 +12,15 @@ import {
 import { imgBackGround1, backGround1, textPrimary } from '../themes/colors';
 import { TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import Footer from '../componets/shared/Footer';
-import { ScreenProps, TabIndex } from "../types";
+import { ScreenProps, TabIndex, introDataTable } from "../types";
 import { changeTab, parcialHeader } from '../utils';
+import TableCustom from '../componets/TableCustom';
 
 const FirstRoute = () => (
-  <View style={{ flex: 1, backgroundColor: backGround1 }}>
+  <View style={styles.routeContainer}>
     <Text style={styles.textTitle}> Introducción </Text>
-    <Text style={styles.textNormal}>
-      Bienvenido a SQLelectron una aplicacion móvil con un serie de lecciones y ejercicios practicos que te ayudaran a aprender SQL.
+    <Text style={styles.subTitle}>
+      Bienvenido a SQLelectron la aplicacion móvil con una serie de lecciones y ejercicios practicos que te ayudaran a aprender SQL.
     </Text>
     <Text style={styles.textSecondTitle}> ¿Que es SQL?  </Text>
     <Text style={styles.textNormal}>
@@ -46,7 +47,27 @@ const FirstRoute = () => (
 );
 
 const SecondRoute = () => (
-  <View style={{ flex: 1, backgroundColor: backGround1 }} />
+  <View style={styles.routeContainer}>
+    <Text style={styles.textTitle}>
+      Base de datos relacional
+    </Text>
+    <TableCustom data={introDataTable} />
+    <Text style={styles.textNormal}>
+      En una base de datos de este tipo, es posible encontrar tablas adicionales relacionadas que contengan
+      información como una lista de todos los conductores registrados en el estado, los tipos de permisos de
+      conducir que se pueden conceder o incluso las infracciones de tráfico de cada conductor.
+    </Text>
+    <Text style={styles.textNormal}>
+      Al aprender SQL, el objetivo es aprender a responder preguntas concretas sobre estos datos, para
+      ayudarnos a tomar mejores decisiones en el futuro, como:
+    </Text>
+    <Text style={styles.textNormal}>
+      ¿Qué tipos de vehículos circulan con menos de cuatro ruedas?
+    </Text>
+    <Text style={styles.textNormal}>
+      ¿Cuántos modelos de coches fabrica Tesla?
+    </Text>
+  </View>
 );
 
 const renderScene = SceneMap({
@@ -74,11 +95,20 @@ const IntroClass = ({navigation}: ScreenProps) => {
 
   const layout = useWindowDimensions();
   const [index, setIndex] = useState<TabIndex>(TabIndex.first);
+  const [screenHeight, setScreenHeight] = useState<number>(820);
   const [routes] = useState<Array<any>>([
     { key: 'first', title: 'Clase  ' },
     { key: 'second', title: 'Ejemplo  ' },
   ]);
   const scrollRef = React.createRef<ScrollView>();
+
+  useEffect(() => {
+    if(index === TabIndex.first) {
+      setScreenHeight(820);
+    } else if(index === TabIndex.last) {
+      setScreenHeight(660);
+    }
+  }, [index]);
 
   return (
     <Animated.ScrollView
@@ -96,7 +126,7 @@ const IntroClass = ({navigation}: ScreenProps) => {
         renderScene={renderScene}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
-        style={{height: 650}}
+        style={{height: screenHeight}}
       />
       <Footer
         currentTabIndex={index}
@@ -120,6 +150,12 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 15,
   },
+  routeContainer: {
+    flex: 1,
+    backgroundColor: backGround1,
+    paddingTop: 10,
+    paddingHorizontal: 15,
+  },
   tabLabel: {
     color: textPrimary,
     fontFamily: 'Jost-Light',
@@ -137,6 +173,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Jost-Regular',
     textAlign: 'center',
+    marginBottom: 15,
+  },
+  subTitle: {
+    color: textPrimary,
+    fontSize: 20,
+    fontFamily: 'Jost-SemiBold',
+    textAlign: 'center',
+    marginTop: 5,
+    marginBottom: 20,
   },
   textTitle: {
     fontFamily: 'Jost-Bold',
@@ -149,6 +194,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: 'Jost-Regular',
     textAlign: 'center',
+    marginBottom: 10,
   },
 });
 

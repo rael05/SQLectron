@@ -22,6 +22,11 @@ export type StackParamList = {
     EighteenthClass: undefined;
 };
 
+export type DataTables = {
+    headTable: Array<string>;
+    dataTable: Array<Array<string>>;
+}
+
 export type ScreenProps = {
     navigation: DrawerNavigationProp<StackParamList>;
 };
@@ -43,3 +48,14 @@ export const tipsSideMenu: Array<string> = [
     "La creatividad es tan importante como la lógica en la programación. No tengas miedo de explorar nuevas ideas y soluciones.",
     "Recuerda siempre por qué empezaste a programar. Mantén viva tu pasión y nunca dejes de aprender y crecer en este fascinante campo.",
 ];
+
+export const introDataTable: DataTables = {
+    headTable: ['Id', 'Marca', 'Llantas', 'Puertas', 'Tipo'],
+    dataTable: [
+        ['1', 'Ford', '4', '4', 'Sedan'],
+        ['2', 'Nissan', '4', '2', 'Sport'],
+        ['3', 'Yamaha', '2', '0', 'Moto'],
+        ['4', 'Subaru', '4', '5', 'Sedan'],
+        ['5', 'Kia', '4', '4', 'Sedan']
+    ],
+};

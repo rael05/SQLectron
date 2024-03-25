@@ -71,9 +71,11 @@ const IntroClass = ({navigation}: ScreenProps) => {
     <ClassComponent 
       urlImg={require('../../img/sql-intro.png')}
       firstTabComponent={FirstRoute}
+      firstTabHeight={820}
       secondTabComponent={SecondRoute}
-      titleTabFirst='Clase  '
-      titleTabSecond='Ejemplo  '
+      secondTabHeight={660}
+      titleTabFirst='Clase'
+      titleTabSecond='Ejemplo'
       nextClass={() => navigation.navigate('FirstClass')}
     />
   );

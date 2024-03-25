@@ -18,8 +18,12 @@ import { TabIndex } from "../types";
 
 type ClassComponentProps = {
     urlImg: ImageSourcePropType;
+    styleImg?: any;
+    backgroundColorImg?: string;
     firstTabComponent: () => React.JSX.Element;
+    firstTabHeight?: number;
     secondTabComponent: () => React.JSX.Element;
+    secondTabHeight?: number;
     titleTabFirst: string;
     titleTabSecond: string;
     nextClass?: () => void;
@@ -43,8 +47,12 @@ const renderTabBar = (props: any) => {
 
 const ClassComponent = ({
     urlImg,
+    styleImg,
+    backgroundColorImg = imgBackGround1,
     firstTabComponent,
+    firstTabHeight = 1000,
     secondTabComponent,
+    secondTabHeight = 1000,
     titleTabFirst,
     titleTabSecond,
     nextClass,
@@ -54,7 +62,7 @@ const ClassComponent = ({
 
     const layout = useWindowDimensions();
     const [index, setIndex] = useState<TabIndex>(TabIndex.first);
-    const [screenHeight, setScreenHeight] = useState<number>(820);
+    const [screenHeight, setScreenHeight] = useState<number>(firstTabHeight);
     const [routes] = useState<Array<any>>([
         { key: 'first', title: titleTabFirst },
         { key: 'second', title: titleTabSecond },
@@ -63,9 +71,9 @@ const ClassComponent = ({
 
     useEffect(() => {
         if(index === TabIndex.first) {
-            setScreenHeight(820);
+            setScreenHeight(firstTabHeight);
         } else if(index === TabIndex.last) {
-            setScreenHeight(660);
+            setScreenHeight(secondTabHeight);
         }
     }, [index]);
 
@@ -81,8 +89,8 @@ const ClassComponent = ({
             scrollIndicatorInsets={{ top: scrollIndicatorInsetTop }}
             ref={scrollRef}
         >
-            <View style={styles.bgImg}>
-                <Image source={urlImg} style={styles.imgStyle} />
+            <View style={{...styles.bgImg, backgroundColor: backgroundColorImg}}>
+                <Image source={urlImg} style={[styles.imgStyle, styleImg]} />
             </View>
             <TabView
                 renderTabBar={renderTabBar}
@@ -103,13 +111,12 @@ const ClassComponent = ({
 
 const styles = StyleSheet.create({
     bgImg: {
-        backgroundColor: imgBackGround1,
         paddingVertical: 20,
-        paddingHorizontal: 15,
+        paddingHorizontal: 13,
     },
     imgStyle: {
-        width: 356,
-        height: 224,
+        width: 358,
+        height: 226,
     },
     tabLabel: {
         color: textPrimary,

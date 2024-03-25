@@ -6,3 +6,6 @@ export const backGround1 = '#EEE2DE';
 export const textPrimary = '#22223D';
 export const buttonPrimary = '#6974C8';
 export const backGround2 = '#364089';
+export const linkText = '#0B4FFF';
+export const bgCardText = '#D9D9D9';
+export const grayForText = '#727272';

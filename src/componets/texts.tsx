@@ -5,6 +5,9 @@ import { backGround1, bgCardText, grayForText, linkText, textPrimary } from '../
 
 type TextProps = {
     children: React.ReactNode;
+    cleanSpaces?: boolean;
+    positionAlign?: "auto" | "left" | "right" | "center" | "justify" | undefined;
+    grayText?: boolean;
 }
 
 type LinkTextProps = {
@@ -30,17 +33,49 @@ export const TitleText = ({children}: TextProps) => (
     <Text style={styles.textTitle}>{children}</Text>
 );
 
-export const SubTitleText = ({children}: TextProps) => (
-    <Text style={styles.subTitleText}>{children}</Text>
-);
+export const SubTitleText = ({
+    children,
+    cleanSpaces = false,
+    positionAlign = 'center',
+}: TextProps) => {
+    const subTitleTextStyle = {
+        ...styles.subTitleText,
+        textAlign: positionAlign,
+        marginBottom: cleanSpaces ? 0 : 10,
+    };
+    return(
+        <Text style={subTitleTextStyle}>{children}</Text>
+    );
+};
 
-export const BoldText = ({children}: TextProps) => (
-    <Text style={styles.boldText}>{children}</Text>
-);
+export const BoldText = ({children, cleanSpaces = false}: TextProps) => {
+    const boldTextStyle = {
+        ...styles.boldText,
+        marginTop: cleanSpaces ? 0 : 5,
+        marginBottom: cleanSpaces ? 0 : 20,
+    };
+    return(
+        <Text style={boldTextStyle}>{children}</Text>
+    )
+};
 
-export const NormalText = ({children}: TextProps) => (
-    <Text style={styles.normalText}>{children}</Text>
-);
+export const NormalText = ({
+    children,
+    cleanSpaces = false,
+    positionAlign = 'center',
+    grayText = false,
+}: TextProps) => {
+    const normalTextStyle = {
+        ...styles.normalText,
+        marginBottom: cleanSpaces ? 0 : 15,
+        textAlign: positionAlign,
+        color: grayText ? grayForText : textPrimary,
+    }
+
+    return(
+        <Text style={normalTextStyle}>{children}</Text>
+    );
+};
 
 export const LinkText = ({children, onPress}: LinkTextProps) => (
     <Text style={styles.linkText} onPress={onPress}>{children}</Text>
@@ -48,7 +83,9 @@ export const LinkText = ({children, onPress}: LinkTextProps) => (
 
 export const CardContainer = ({children, headerText}: CardContainerProps) => (
     <View style={styles.cardContainerStyle}>
-        <Text style={styles.cardHeaderText}>{headerText}</Text>
+        {headerText && (
+            <Text style={styles.cardHeaderText}>{headerText}</Text>
+        )}
         {children}
     </View>
 );
@@ -80,23 +117,16 @@ const styles = StyleSheet.create({
         color: textPrimary,
         fontSize: 24,
         fontFamily: 'Jost-Regular',
-        textAlign: 'center',
-        marginBottom: 10,
     },
     boldText: {
         color: textPrimary,
         fontSize: 20,
         fontFamily: 'Jost-SemiBold',
         textAlign: 'center',
-        marginTop: 5,
-        marginBottom: 20,
     },
     normalText: {
-        color: textPrimary,
         fontSize: 16,
         fontFamily: 'Jost-Regular',
-        textAlign: 'center',
-        marginBottom: 15,
     },
     linkText: {
         color: linkText,
@@ -112,6 +142,7 @@ const styles = StyleSheet.create({
         paddingVertical:10,
         marginBottom: 15,
         elevation: 10,
+        width: '95%'
     },
     cardHeaderText: {
         fontSize: 12,

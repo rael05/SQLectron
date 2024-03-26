@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { ScreenProps, introDataTable } from "../types";
+import { ScreenProps, firstClassDataExample1, introDataTable } from "../types";
 import ClassComponent from '../componets/ClassComponent';
 import {
   TextContainer,
@@ -12,8 +12,14 @@ import {
   CardContainer,
   CardText,
 } from '../componets/texts';
+import ModalComponent from '../componets/ModalComponent';
+import TableCustom from '../componets/TableCustom';
 
-const FirstRoute = () => (
+type FirstRouteProps = {
+    setVisibleFirstEg: (value: boolean) => void;
+};
+
+const FirstRoute = ({setVisibleFirstEg}: FirstRouteProps) => (
     <TextContainer>
         <TitleText>
             Clase 1: consulta "SELECT"
@@ -56,7 +62,7 @@ const FirstRoute = () => (
         <NormalText>
             El resultado de esta consulta será un conjunto bidimensional de filas y columnas, el cual será una copia de
             la tabla, pero sólo con las columnas que solicitamos (
-                <LinkText onPress={() => console.log("abrir ejemplo")}>
+                <LinkText onPress={() => setVisibleFirstEg(true)}>
                     Otro Ejemplo
                 </LinkText>
             ).
@@ -77,11 +83,7 @@ const FirstRoute = () => (
         </CardContainer>
         <NormalText>
             Esta consulta, en particular, es realmente útil porque es una forma sencilla de inspeccionar una tabla
-            viento todos los datos de una vez (
-                <LinkText onPress={() => console.log("abrir ejemplo")}>
-                    Otro Ejemplo
-                </LinkText>
-            ).
+            viento todos los datos de una vez.
         </NormalText>
     </TextContainer>
 );
@@ -89,26 +91,90 @@ const FirstRoute = () => (
 const SecondRoute = () => (
     <TextContainer>
         <TitleText>
-            Clase 1: consulta "SELECT"
+            Tareas:
         </TitleText>
+        <NormalText cleanSpaces positionAlign='left'>
+            1. Encuentra el titulo de cada pelicula
+        </NormalText>
+        <NormalText cleanSpaces positionAlign='left' grayText>
+            2. Encuentra el director de cada pelicula
+        </NormalText>
+        <NormalText cleanSpaces positionAlign='left' grayText>
+            3. Encuentra el titulo y director de cada pelicula
+        </NormalText>
+        <NormalText cleanSpaces positionAlign='left' grayText>
+            4. Encuentra el titulo y año de cada pelicula
+        </NormalText>
+        <NormalText positionAlign='left' grayText>
+            5. Encuentra toda la informacion de cada pelicula
+        </NormalText>
+
+        <SubTitleText positionAlign='left' cleanSpaces>
+            Tabla: pelicula
+        </SubTitleText>
+        <TableCustom data={introDataTable} />
     </TextContainer>
 );
 
 const SecondClass = ({navigation}: ScreenProps) => {
+    const [visibleFirstEg, setVisibleFirstEg] = useState<boolean>(false);
+    const [query, setQuery] = useState<string>(
+        'SELECT * FROM pelicula;'
+    );
+
     return (
-        <ClassComponent 
-        urlImg={require('../../img/clase1.png')}
-        styleImg={{left: 15}}
-        backgroundColorImg='#40679E'
-        firstTabComponent={FirstRoute}
-        secondTabComponent={SecondRoute}
-        titleTabFirst='Clase'
-        firstTabHeight={1380}
-        titleTabSecond='Ejercicio'
-        prevClass={() => navigation.navigate('IntroClass')}
-        nextClass={() => navigation.navigate('SecondClass')}
-        />
+        <>
+            <ClassComponent
+                urlImg={require('../../img/clase1.png')}
+                styleImg={{left: 15}}
+                backgroundColorImg='#40679E'
+                firstTabComponent={() => <FirstRoute setVisibleFirstEg={setVisibleFirstEg}/>}
+                secondTabComponent={SecondRoute}
+                titleTabFirst='Clase'
+                firstTabHeight={1380}
+                titleTabSecond='Ejercicio'
+                prevClass={() => navigation.navigate('IntroClass')}
+                nextClass={() => navigation.navigate('SecondClass')}
+            />
+            <ModalComponent
+                visible={visibleFirstEg}
+                setVisible={setVisibleFirstEg}
+                title='SELECT para columnas especificas'
+            >
+                <ExampleContent1 />
+            </ModalComponent>
+        </>
     );
 };
+
+const ExampleContent1 = () => (
+    <>
+        <NormalText cleanSpaces>
+            Tomemos la siguiente tabla de Carros como ejemplo, la cual es la misma tabla de la introduccion.
+            Donde tenemos 5 columnas:
+        </NormalText>
+        <BoldText cleanSpaces>(Id, Marca, Llantas, Puerta, Tipo)</BoldText>
+        <TableCustom data={introDataTable} />
+        <NormalText>
+            Ahora bien, si queremos mostrar solo las columnas de "
+            <BoldText>
+                Marca y Tipo
+            </BoldText>
+            " se logra con la siguiente consulta SQL:
+        </NormalText>
+        <CardContainer>
+            <CardText>
+                <CardText grayText>SELECT </CardText>
+                Marca, Tipo
+                <CardText grayText> FROM </CardText>
+                Carros;
+            </CardText>
+        </CardContainer>
+        <NormalText>
+            Ejecutando la consulta tendriamos como resultado:
+        </NormalText>
+        <TableCustom data={firstClassDataExample1} />
+    </>
+);
 
 export default SecondClass;

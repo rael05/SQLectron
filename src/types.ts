@@ -59,3 +59,14 @@ export const introDataTable: DataTables = {
         ['5', 'Kia', '4', '4', 'Sedan']
     ],
 };
+
+export const firstClassDataExample1: DataTables = {
+    headTable: ['Marca', 'Tipo'],
+    dataTable: [
+        ['Ford', 'Sedan'],
+        ['Nissan', 'Sport'],
+        ['Yamaha', 'Moto'],
+        ['Subaru', 'Sedan'],
+        ['Kia', 'Sedan']
+    ],
+}

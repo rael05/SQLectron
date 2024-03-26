@@ -6,11 +6,20 @@ import { buttonPrimary } from '../themes/colors';
 type PrimaryButtonPros = {
     title: string,
     action: () => void,
+    backgroudColor?: string,
 }
 
-export const PrimaryButton = ({title, action}: PrimaryButtonPros) => {
+export const PrimaryButton = ({
+    title,
+    action,
+    backgroudColor = buttonPrimary,
+}: PrimaryButtonPros) => {
+    const containerStyle = {
+        ...styles.container,
+        backgroundColor: backgroudColor
+    };
     return(
-        <TouchableOpacity style={styles.container} onPress={action}>
+        <TouchableOpacity style={containerStyle} onPress={action}>
             <Text style={styles.labelStyle}>{title}</Text>
         </TouchableOpacity>
     );
@@ -29,8 +38,7 @@ const styles = StyleSheet.create({
         height: 50,
         width: 125,
         display: 'flex',
-        justifyContent: 'center',
-        backgroundColor: buttonPrimary
+        justifyContent: 'center'
     },
     labelStyle: {
         color: 'white',

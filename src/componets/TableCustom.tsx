@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: textPrimary,
         borderRadius: 2,
+        width: '100%'
     },
     tableBorder: {
         borderWidth: 2,

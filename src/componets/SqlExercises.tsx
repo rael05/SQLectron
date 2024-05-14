@@ -51,7 +51,7 @@ const SqlExercises = () => {
             <SubTitleText positionAlign='left' cleanSpaces>
                 Tabla: {pelicula_table_name}
             </SubTitleText>
-            <ScrollView style={{ height: '10%' }}>
+            <ScrollView style={{ height: 300 }}>
                 <TableCustom data={peliculas} />
             </ScrollView>
 

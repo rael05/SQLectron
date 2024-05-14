@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { ScreenProps, introDataTable } from "../types";
 import TableCustom from '../componets/TableCustom';
@@ -67,6 +67,8 @@ const SecondRoute = () => (
 
 
 const IntroClass = ({navigation}: ScreenProps) => {
+  const [scrollEnabled, setScrollEnabled] = useState(true);
+
   return (
     <ClassComponent 
       urlImg={require('../../img/sql-intro.png')}

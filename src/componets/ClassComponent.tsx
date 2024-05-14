@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
     Image,
     View,
@@ -11,10 +11,11 @@ import {
 } from 'react-native';
 
 import { backGround1, imgBackGround1, textPrimary } from "../themes/colors";
-import { TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import Footer from "./shared/Footer";
 import { changeTab, parcialHeader } from "../utils";
 import { TabIndex } from "../types";
+import { Keyboard } from "react-native";
 
 type ClassComponentProps = {
     urlImg: ImageSourcePropType;
@@ -31,16 +32,16 @@ type ClassComponentProps = {
 }
 
 const renderTabBar = (props: any) => {
-    return(
+    return (
         <TabBar
-        {...props}
-        indicatorStyle={{ backgroundColor: textPrimary, height: 3 }}
-        style={{ backgroundColor: backGround1, borderTopWidth: 1, borderTopColor: textPrimary }}
-        renderLabel={({ route, focused }) => (
-            <Text style={focused ? styles.tabLabelFocus : styles.tabLabel}>
-                {route.title}
-            </Text>
-        )}
+            {...props}
+            indicatorStyle={{ backgroundColor: textPrimary, height: 3 }}
+            style={{ backgroundColor: backGround1, borderTopWidth: 1, borderTopColor: textPrimary }}
+            renderLabel={({ route, focused }) => (
+                <Text style={focused ? styles.tabLabelFocus : styles.tabLabel}>
+                    {route.title}
+                </Text>
+            )}
         />
     )
 };
@@ -67,12 +68,31 @@ const ClassComponent = ({
         { key: 'first', title: titleTabFirst },
         { key: 'second', title: titleTabSecond },
     ]);
+    const [scrollEnabled, setScrollEnabled] = useState(true);
     const scrollRef = React.createRef<ScrollView>();
 
+    const keyboardDidShow = useCallback(() => {
+        setScrollEnabled(false);
+    }, []);
+
+    const keyboardDidHide = useCallback(() => {
+        setScrollEnabled(true);
+    }, []);
+
     useEffect(() => {
-        if(index === TabIndex.first) {
+        const keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", keyboardDidShow);
+        const keyboardDidHideListener = Keyboard.addListener("keyboardDidHide", keyboardDidHide);
+
+        return () => {
+            keyboardDidShowListener.remove();
+            keyboardDidHideListener.remove();
+        };
+    }, []);
+
+    useEffect(() => {
+        if (index === TabIndex.first) {
             setScreenHeight(firstTabHeight);
-        } else if(index === TabIndex.last) {
+        } else if (index === TabIndex.last) {
             setScreenHeight(secondTabHeight);
         }
     }, [index]);
@@ -82,14 +102,15 @@ const ClassComponent = ({
         second: secondTabComponent,
     });
 
-    return(
+    return (
         <Animated.ScrollView
             onScroll={onScroll}
             contentContainerStyle={{ paddingTop: containerPaddingTop }}
             scrollIndicatorInsets={{ top: scrollIndicatorInsetTop }}
             ref={scrollRef}
+            scrollEnabled={scrollEnabled}
         >
-            <View style={{...styles.bgImg, backgroundColor: backgroundColorImg}}>
+            <View style={{ ...styles.bgImg, backgroundColor: backgroundColorImg }}>
                 <Image source={urlImg} style={[styles.imgStyle, styleImg]} />
             </View>
             <TabView
@@ -98,13 +119,13 @@ const ClassComponent = ({
                 renderScene={renderScene}
                 onIndexChange={setIndex}
                 initialLayout={{ width: layout.width }}
-                style={{height: screenHeight}}
+                style={{ height: screenHeight }}
             />
             <Footer
                 currentTabIndex={index}
                 changeTab={(indexToChange) => changeTab(indexToChange, setIndex, scrollRef)}
                 nextClass={nextClass}
-                prevClass={prevClass}/>
+                prevClass={prevClass} />
         </Animated.ScrollView>
     );
 };

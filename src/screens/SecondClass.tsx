@@ -4,11 +4,11 @@ import { ScreenProps, introDataTable } from "../types";
 import TableCustom from '../componets/TableCustom';
 import ClassComponent from '../componets/ClassComponent';
 import {
-  TextContainer,
-  TitleText,
-  SubTitleText,
-  BoldText,
-  NormalText,
+    TextContainer,
+    TitleText,
+    SubTitleText,
+    BoldText,
+    NormalText,
 } from '../componets/texts';
 
 const FirstRoute = () => (
@@ -27,15 +27,15 @@ const SecondRoute = () => (
     </TextContainer>
 );
 
-const SecondClass = ({navigation}: ScreenProps) => {
+const SecondClass = ({ navigation }: ScreenProps) => {
     return (
-        <ClassComponent 
-        urlImg={require('../../img/sql-intro.png')}
-        firstTabComponent={FirstRoute}
-        secondTabComponent={SecondRoute}
-        titleTabFirst='Clase'
-        titleTabSecond='Ejercicio'
-        nextClass={() => navigation.navigate('FirstClass')}
+        <ClassComponent
+            urlImg={require('../../img/sql-intro.png')}
+            firstTabComponent={FirstRoute}
+            secondTabComponent={SecondRoute}
+            titleTabFirst='Clase'
+            titleTabSecond='Ejercicio'
+            nextClass={() => navigation.navigate('FirstClass')}
         />
     );
 };

@@ -14,6 +14,7 @@ import {
 } from '../componets/texts';
 import ModalComponent from '../componets/ModalComponent';
 import TableCustom from '../componets/TableCustom';
+import SqlExercises from '../componets/SqlExercises';
 
 type FirstRouteProps = {
     setVisibleFirstEg: (value: boolean) => void;
@@ -109,10 +110,7 @@ const SecondRoute = () => (
             5. Encuentra toda la informacion de cada pelicula
         </NormalText>
 
-        <SubTitleText positionAlign='left' cleanSpaces>
-            Tabla: pelicula
-        </SubTitleText>
-        <TableCustom data={introDataTable} />
+        <SqlExercises />
     </TextContainer>
 );
 
@@ -130,9 +128,10 @@ const SecondClass = ({navigation}: ScreenProps) => {
                 backgroundColorImg='#40679E'
                 firstTabComponent={() => <FirstRoute setVisibleFirstEg={setVisibleFirstEg}/>}
                 secondTabComponent={SecondRoute}
-                titleTabFirst='Clase'
+                titleTabFirst='Clase  '
                 firstTabHeight={1380}
-                titleTabSecond='Ejercicio'
+                secondTabHeight={1500}
+                titleTabSecond='Ejercicio  '
                 prevClass={() => navigation.navigate('IntroClass')}
                 nextClass={() => navigation.navigate('SecondClass')}
             />

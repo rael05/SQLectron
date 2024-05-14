@@ -28,3 +28,21 @@ export const changeTab = (
     setIndex(indexToChange);
     scrollRef.current?.scrollTo({y: 0, animated: true});
 };
+
+export const formatQueryResults = (sqlResults: Array<any>) => {
+    const rows: Array<Object> = [];
+
+    sqlResults.forEach(result => {
+        for (let index = 0; index < result.rows.length; index++) {
+            const newRow = result.rows.item(index);
+            const reverseKeys = Object.keys(newRow).reverse();
+            const rowToShow = {};
+
+            reverseKeys.forEach(key => (rowToShow[key as keyof Object] = newRow[key]));
+
+            rows.push(rowToShow);
+        }
+    });
+
+    return rows;
+};

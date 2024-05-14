@@ -3,22 +3,24 @@ import { StyleSheet, View } from "react-native";
 
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-reanimated-table';
 import { backGround1, textPrimary } from "../themes/colors";
-import { DataTables } from "../types";
 
 type TableCustomProps = {
-    data: DataTables;
+    data: Array<Object>;
 };
 
 const TableCustom = ({data}: TableCustomProps) => {
+    const headerTable = Object.keys(data[0] || {})
+    const dataTable = data.map(row => Object.values(row))
+
     return(
         <View style={styles.container}>
             <Table borderStyle={styles.tableBorder}>
                 <Row
-                data={data.headTable}
+                data={headerTable}
                 textStyle={styles.textHeader}
                 />
                 <Rows
-                data={data.dataTable}
+                data={dataTable}
                 textStyle={styles.textRow}
                 style={styles.stylesRow}
                 />

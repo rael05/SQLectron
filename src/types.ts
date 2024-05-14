@@ -22,9 +22,12 @@ export type StackParamList = {
     EighteenthClass: undefined;
 };
 
-export type DataTables = {
-    headTable: Array<string>;
-    dataTable: Array<Array<string>>;
+export type Pelicula = {
+    id: number;
+    titulo: string;
+    director: string;
+    anio: number;
+    duracion_minutos: number;
 }
 
 export type ScreenProps = {
@@ -49,24 +52,18 @@ export const tipsSideMenu: Array<string> = [
     "Recuerda siempre por qué empezaste a programar. Mantén viva tu pasión y nunca dejes de aprender y crecer en este fascinante campo.",
 ];
 
-export const introDataTable: DataTables = {
-    headTable: ['Id', 'Marca', 'Llantas', 'Puertas', 'Tipo'],
-    dataTable: [
-        ['1', 'Ford', '4', '4', 'Sedan'],
-        ['2', 'Nissan', '4', '2', 'Sport'],
-        ['3', 'Yamaha', '2', '0', 'Moto'],
-        ['4', 'Subaru', '4', '5', 'Sedan'],
-        ['5', 'Kia', '4', '4', 'Sedan']
-    ],
-};
+export const introDataTable: Array<Object> = [
+    {Id: '1', Marca: 'Ford', Llantas: '4', Puertas: '4', Tipo: 'Sedan'},
+    {Id: '2', Marca: 'Nissan', Llantas: '4', Puertas: '2', Tipo: 'Sport'},
+    {Id: '3', Marca: 'Yamaha', Llantas: '2', Puertas: '0', Tipo: 'Moto'},
+    {Id: '4', Marca: 'Subaru', Llantas: '4', Puertas: '5', Tipo: 'Sedan'},
+    {Id: '5', Marca: 'Kia', Llantas: '4', Puertas: '4', Tipo: 'Sedan'},
+];
 
-export const firstClassDataExample1: DataTables = {
-    headTable: ['Marca', 'Tipo'],
-    dataTable: [
-        ['Ford', 'Sedan'],
-        ['Nissan', 'Sport'],
-        ['Yamaha', 'Moto'],
-        ['Subaru', 'Sedan'],
-        ['Kia', 'Sedan']
-    ],
-}
+export const firstClassDataExample1: Array<Object> = [
+    {Marca: 'Ford', Tipo: 'Sedan'},
+    {Marca: 'Nissan', Tipo: 'Sport'},
+    {Marca: 'Yamaha', Tipo: 'Moto'},
+    {Marca: 'Subaru', Tipo: 'Sedan'},
+    {Marca: 'Kia', Tipo: 'Sedan'},
+];

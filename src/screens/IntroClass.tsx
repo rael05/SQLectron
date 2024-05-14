@@ -74,8 +74,8 @@ const IntroClass = ({navigation}: ScreenProps) => {
       firstTabHeight={820}
       secondTabComponent={SecondRoute}
       secondTabHeight={660}
-      titleTabFirst='Clase'
-      titleTabSecond='Ejemplo'
+      titleTabFirst='Clase  '
+      titleTabSecond='Ejemplo   '
       nextClass={() => navigation.navigate('FirstClass')}
     />
   );

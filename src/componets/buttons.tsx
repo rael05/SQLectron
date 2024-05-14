@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-import { buttonPrimary } from '../themes/colors';
+import { backGround1, buttonPrimary, textPrimary } from '../themes/colors';
 
 type PrimaryButtonPros = {
     title: string,
@@ -33,6 +33,14 @@ export const OutlinePrimaryB = ({title, action}: PrimaryButtonPros) => {
     );
 };
 
+export const QueryButton = ({action}: {action: () => void}) => {
+    return(
+        <TouchableOpacity onPress={action} style={styles.queryContainer}>
+            <Text style={styles.queryLabel}>{'Ejecutar'}</Text>
+        </TouchableOpacity>
+    );
+};
+
 const styles = StyleSheet.create({
     container: {
         height: 50,
@@ -59,5 +67,22 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'Jost-SemiBold',
         fontSize: 14,
+    },
+    queryLabel: {
+        color: backGround1,
+        textAlign: 'center',
+        fontFamily: 'Jost-SemiBold',
+        fontSize: 16,
+    },
+    queryContainer: {
+        borderWidth: 1,
+        backgroundColor: textPrimary,
+        display: 'flex',
+        justifyContent: 'center',
+        paddingLeft: 10,
+        paddingRight: 14,
+        borderTopRightRadius: 20,
+        borderBottomEndRadius: 20,
+        width: '25%'
     },
 });
